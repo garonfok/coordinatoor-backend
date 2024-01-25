@@ -13,22 +13,16 @@ public class Coordinate {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column
   private Long id;
 
-  @Column
   private Long worldId;
 
-  @Column
   private String name;
 
-  @Column
   private int x;
 
-  @Column
   private int y;
 
-  @Column
   private int z;
 
   @Enumerated(EnumType.STRING)

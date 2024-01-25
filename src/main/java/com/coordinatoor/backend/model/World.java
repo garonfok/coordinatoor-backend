@@ -13,7 +13,6 @@ public class World {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
   private String name;
 
   @Column(nullable = true)
