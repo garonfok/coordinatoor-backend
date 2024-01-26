@@ -26,7 +26,7 @@ public class World {
   private String ipAddress;
 
   @OneToMany(mappedBy = "world")
-  private List<Coordinate> coordinates = new ArrayList<Coordinate>();
+  private List<WorldCoordinate> coordinates = new ArrayList<WorldCoordinate>();
 
   public World(String name, String seed, String ipAddress) {
     this.name = name;
