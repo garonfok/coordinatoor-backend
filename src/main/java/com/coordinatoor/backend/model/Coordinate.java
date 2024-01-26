@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Coordinate {
@@ -26,6 +28,10 @@ public class Coordinate {
   @Enumerated(EnumType.STRING)
   @Column(columnDefinition = "varchar(255) default 'OVERWORLD'")
   private DimensionEnum dimension;
+
+  @ManyToOne
+  @JoinColumn(name = "fk_world")
+  private World world;
 
   public Coordinate(String name, int x, int y, int z, DimensionEnum dimension) {
     this.name = name;
