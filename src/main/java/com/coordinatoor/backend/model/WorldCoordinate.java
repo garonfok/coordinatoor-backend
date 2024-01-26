@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Coordinate {
+public class WorldCoordinate {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class Coordinate {
   @JoinColumn(name = "fk_world")
   private World world;
 
-  public Coordinate(String name, int x, int y, int z, DimensionEnum dimension) {
+  public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension) {
     this.name = name;
     this.x = x;
     this.y = y;
