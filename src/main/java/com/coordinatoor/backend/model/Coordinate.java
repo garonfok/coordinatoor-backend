@@ -15,8 +15,6 @@ public class Coordinate {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private Long worldId;
-
   private String name;
 
   private int x;
@@ -29,8 +27,7 @@ public class Coordinate {
   @Column(columnDefinition = "varchar(255) default 'OVERWORLD'")
   private DimensionEnum dimension;
 
-  public Coordinate(long worldId, String name, int x, int y, int z, DimensionEnum dimension) {
-    this.worldId = worldId;
+  public Coordinate(String name, int x, int y, int z, DimensionEnum dimension) {
     this.name = name;
     this.x = x;
     this.y = y;
