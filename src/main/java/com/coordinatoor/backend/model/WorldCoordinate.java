@@ -41,6 +41,10 @@ public class WorldCoordinate {
     this.dimension = dimension;
   }
 
+  public String getName() {
+    return this.name;
+  }
+
   public int getX() {
     return this.x;
   }
@@ -51,6 +55,10 @@ public class WorldCoordinate {
 
   public int getZ() {
     return this.z;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public void setX(int x) {
