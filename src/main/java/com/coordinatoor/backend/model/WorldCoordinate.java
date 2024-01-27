@@ -13,6 +13,12 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class WorldCoordinate {
 
+  public enum DimensionEnum {
+    OVERWORLD,
+    NETHER,
+    END
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -72,10 +78,4 @@ public class WorldCoordinate {
   public void setZ(int z) {
     this.z = z;
   }
-}
-
-enum DimensionEnum {
-  OVERWORLD,
-  NETHER,
-  END
 }
