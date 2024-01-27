@@ -8,6 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -27,6 +30,16 @@ public class World {
 
   @OneToMany(mappedBy = "world")
   private List<WorldCoordinate> coordinates = new ArrayList<WorldCoordinate>();
+
+  @ManyToOne
+  @JoinColumn(name = "fk_user")
+  private User owner;
+
+  @ManyToMany
+  private List<User> editors = new ArrayList<User>();
+
+  @ManyToMany
+  private List<User> viewers = new ArrayList<User>();
 
   public World(String name, String seed, String ipAddress) {
     this.name = name;
