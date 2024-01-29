@@ -47,6 +47,10 @@ public class World {
     this.ipAddress = ipAddress;
   }
 
+  public Long getId() {
+    return this.id;
+  }
+
   public String getName() {
     return this.name;
   }
@@ -57,10 +61,6 @@ public class World {
 
   public String getIpAddress() {
     return this.ipAddress;
-  }
-
-  public Long getId() {
-    return this.id;
   }
 
   public void setName(String name) {
