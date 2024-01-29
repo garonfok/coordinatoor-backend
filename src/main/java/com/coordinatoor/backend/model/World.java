@@ -50,6 +50,26 @@ public class World {
     this.owner = owner;
   }
 
+  @Override
+  public String toString() {
+    return String.format("World[id=%d, name='%s', seed='%s', ipAddress='%s']", this.id, this.name, this.seed,
+        this.ipAddress);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    World world = (World) o;
+    return world.getId().equals(this.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.id.hashCode();
+  }
+
   public Long getId() {
     return this.id;
   }

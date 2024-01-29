@@ -38,6 +38,25 @@ public class User {
     this.email = email;
   }
 
+  @Override
+  public String toString() {
+    return String.format("User[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    User user = (User) o;
+    return user.getId().equals(this.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.id.hashCode();
+  }
+
   public Long getId() {
     return this.id;
   }

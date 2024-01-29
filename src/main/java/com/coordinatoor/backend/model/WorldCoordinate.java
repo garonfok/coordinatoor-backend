@@ -48,6 +48,26 @@ public class WorldCoordinate {
     this.world = world;
   }
 
+  @Override
+  public String toString() {
+    return String.format("WorldCoordinate[id=%d, name='%s', x='%d', y='%d', z='%d', dimension='%s']", this.id,
+        this.name, this.x, this.y, this.z, this.dimension);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    WorldCoordinate worldCoordinate = (WorldCoordinate) o;
+    return worldCoordinate.getId().equals(this.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.id.hashCode();
+  }
+
   public Long getId() {
     return this.id;
   }
