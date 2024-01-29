@@ -72,6 +72,14 @@ public class World {
     return this.owner;
   }
 
+  public List<User> getEditors() {
+    return this.editors;
+  }
+
+  public List<User> getViewers() {
+    return this.viewers;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -86,5 +94,29 @@ public class World {
 
   public void setOwner(User owner) {
     this.owner = owner;
+  }
+
+  public void addEditor(User editor) {
+    if (this.owner.equals(editor)) {
+      throw new IllegalArgumentException("Owner cannot be added as editor");
+    }
+
+    this.editors.add(editor);
+  }
+
+  public void removeEditor(User editor) {
+    this.editors.remove(editor);
+  }
+
+  public void addViewer(User viewer) {
+    if (this.owner.equals(viewer)) {
+      throw new IllegalArgumentException("Owner cannot be added as viewer");
+    }
+
+    this.viewers.add(viewer);
+  }
+
+  public void removeViewer(User viewer) {
+    this.viewers.remove(viewer);
   }
 }
