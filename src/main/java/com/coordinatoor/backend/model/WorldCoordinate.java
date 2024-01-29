@@ -48,6 +48,10 @@ public class WorldCoordinate {
     this.world = world;
   }
 
+  public Long getId() {
+    return this.id;
+  }
+
   public String getName() {
     return this.name;
   }
