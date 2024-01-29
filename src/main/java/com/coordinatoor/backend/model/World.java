@@ -1,7 +1,7 @@
 package com.coordinatoor.backend.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,17 +29,17 @@ public class World {
   private String ipAddress;
 
   @OneToMany(mappedBy = "world")
-  private List<WorldCoordinate> coordinates = new ArrayList<WorldCoordinate>();
+  private Set<WorldCoordinate> coordinates = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "fk_user")
   private User owner;
 
   @ManyToMany
-  private List<User> editors = new ArrayList<User>();
+  private Set<User> editors = new HashSet<>();
 
   @ManyToMany
-  private List<User> viewers = new ArrayList<User>();
+  private Set<User> viewers = new HashSet<>();
 
   public World(String name, String seed, String ipAddress, User owner) {
     this.name = name;
@@ -64,7 +64,7 @@ public class World {
     return this.ipAddress;
   }
 
-  public List<WorldCoordinate> getCoordinates() {
+  public Set<WorldCoordinate> getCoordinates() {
     return this.coordinates;
   }
 
@@ -72,11 +72,11 @@ public class World {
     return this.owner;
   }
 
-  public List<User> getEditors() {
+  public Set<User> getEditors() {
     return this.editors;
   }
 
-  public List<User> getViewers() {
+  public Set<User> getViewers() {
     return this.viewers;
   }
 
