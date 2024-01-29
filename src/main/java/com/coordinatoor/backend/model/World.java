@@ -3,6 +3,8 @@ package com.coordinatoor.backend.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.coordinatoor.backend.model.WorldCoordinate.DimensionEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -66,6 +68,18 @@ public class World {
 
   public Set<WorldCoordinate> getCoordinates() {
     return this.coordinates;
+  }
+
+  public Set<WorldCoordinate> getCoordinates(DimensionEnum dimension) {
+    Set<WorldCoordinate> coordinates = new HashSet<>();
+
+    for (WorldCoordinate coordinate : this.coordinates) {
+      if (coordinate.getDimension().equals(dimension)) {
+        coordinates.add(coordinate);
+      }
+    }
+
+    return coordinates;
   }
 
   public User getOwner() {
