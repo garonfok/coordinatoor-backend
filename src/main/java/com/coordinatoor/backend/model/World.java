@@ -64,6 +64,10 @@ public class World {
     return this.ipAddress;
   }
 
+  public List<WorldCoordinate> getCoordinates() {
+    return this.coordinates;
+  }
+
   public User getOwner() {
     return this.owner;
   }
