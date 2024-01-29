@@ -61,4 +61,32 @@ public class User {
   public Set<World> getViewerWorlds() {
     return this.viewerWorlds;
   }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void addOwnerWorld(World world) {
+    this.ownerWorlds.add(world);
+  }
+
+  public void addEditorWorld(World world) {
+    this.editorWorlds.add(world);
+  }
+
+  public void addViewerWorld(World world) {
+    this.viewerWorlds.add(world);
+  }
+
+  public void removeOwnerWorld(World world) {
+    this.ownerWorlds.remove(world);
+  }
+
+  public void removeEditorWorld(World world) {
+    this.editorWorlds.remove(world);
+  }
+
+  public void removeViewerWorld(World world) {
+    this.viewerWorlds.remove(world);
+  }
 }
