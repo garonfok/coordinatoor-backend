@@ -62,6 +62,18 @@ public class User {
     return this.viewerWorlds;
   }
 
+  public boolean isOwner(World world) {
+    return this.ownerWorlds.contains(world);
+  }
+
+  public boolean isEditor(World world) {
+    return this.editorWorlds.contains(world);
+  }
+
+  public boolean isViewer(World world) {
+    return this.viewerWorlds.contains(world);
+  }
+
   public void setUsername(String username) {
     this.username = username;
   }
