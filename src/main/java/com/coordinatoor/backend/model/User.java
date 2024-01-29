@@ -49,4 +49,16 @@ public class User {
   public String getEmail() {
     return this.email;
   }
+
+  public Set<World> getOwnerWorlds() {
+    return this.ownerWorlds;
+  }
+
+  public Set<World> getEditorWorlds() {
+    return this.editorWorlds;
+  }
+
+  public Set<World> getViewerWorlds() {
+    return this.viewerWorlds;
+  }
 }
