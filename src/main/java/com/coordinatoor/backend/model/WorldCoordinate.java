@@ -39,12 +39,13 @@ public class WorldCoordinate {
   @JoinColumn(name = "fk_world")
   private World world;
 
-  public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension) {
+  public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {
     this.name = name;
     this.x = x;
     this.y = y;
     this.z = z;
     this.dimension = dimension;
+    this.world = world;
   }
 
   public String getName() {
@@ -61,6 +62,10 @@ public class WorldCoordinate {
 
   public int getZ() {
     return this.z;
+  }
+
+  public World getWorld() {
+    return this.world;
   }
 
   public void setName(String name) {
