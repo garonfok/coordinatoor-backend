@@ -33,6 +33,11 @@ public class User {
   @ManyToMany
   private Set<World> viewerWorlds = new HashSet<>();
 
+  public User(String username, String email) {
+    this.username = username;
+    this.email = email;
+  }
+
   public Long getId() {
     return this.id;
   }
@@ -43,10 +48,5 @@ public class User {
 
   public String getEmail() {
     return this.email;
-  }
-
-  public User(String username, String email) {
-    this.username = username;
-    this.email = email;
   }
 }
