@@ -1,7 +1,7 @@
 package com.coordinatoor.backend.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,13 +25,13 @@ public class User {
   private String email;
 
   @OneToMany(mappedBy = "owner")
-  private List<World> ownerWorlds = new ArrayList<World>();
+  private Set<World> ownerWorlds = new HashSet<>();
 
   @ManyToMany
-  private List<World> editorWorlds = new ArrayList<World>();
+  private Set<World> editorWorlds = new HashSet<>();
 
   @ManyToMany
-  private List<World> viewerWorlds = new ArrayList<World>();
+  private Set<World> viewerWorlds = new HashSet<>();
 
   public Long getId() {
     return this.id;
