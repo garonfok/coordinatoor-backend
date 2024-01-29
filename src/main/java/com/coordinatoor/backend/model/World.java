@@ -80,6 +80,18 @@ public class World {
     return this.viewers;
   }
 
+  public boolean isOwner(User user) {
+    return this.owner.equals(user);
+  }
+
+  public boolean isEditor(User user) {
+    return this.editors.contains(user);
+  }
+
+  public boolean isViewer(User user) {
+    return this.viewers.contains(user);
+  }
+
   public void setName(String name) {
     this.name = name;
   }
