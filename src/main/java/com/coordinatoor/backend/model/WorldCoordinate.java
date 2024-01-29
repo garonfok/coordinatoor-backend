@@ -64,6 +64,10 @@ public class WorldCoordinate {
     return this.z;
   }
 
+  public DimensionEnum getDimension() {
+    return this.dimension;
+  }
+
   public World getWorld() {
     return this.world;
   }
@@ -82,5 +86,9 @@ public class WorldCoordinate {
 
   public void setZ(int z) {
     this.z = z;
+  }
+
+  public void setDimension(DimensionEnum dimension) {
+    this.dimension = dimension;
   }
 }
