@@ -41,10 +41,11 @@ public class World {
   @ManyToMany
   private List<User> viewers = new ArrayList<User>();
 
-  public World(String name, String seed, String ipAddress) {
+  public World(String name, String seed, String ipAddress, User owner) {
     this.name = name;
     this.seed = seed;
     this.ipAddress = ipAddress;
+    this.owner = owner;
   }
 
   public Long getId() {
@@ -63,6 +64,10 @@ public class World {
     return this.ipAddress;
   }
 
+  public User getOwner() {
+    return this.owner;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -73,5 +78,9 @@ public class World {
 
   public void setIpAddress(String ipAddress) {
     this.ipAddress = ipAddress;
+  }
+
+  public void setOwner(User owner) {
+    this.owner = owner;
   }
 }
