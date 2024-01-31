@@ -7,6 +7,7 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.coordinatoor.backend.model.User;
+import com.coordinatoor.backend.model.World;
 
 @Repository
 public interface UserRepository extends ListCrudRepository<User, Long> {
@@ -15,4 +16,6 @@ public interface UserRepository extends ListCrudRepository<User, Long> {
   Optional<User> findByUsername(String email);
 
   List<User> getAllByUsername(String username);
+
+  List<World> getAllWorldsByRole(String role);
 }
