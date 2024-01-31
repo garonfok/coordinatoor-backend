@@ -9,6 +9,13 @@
 		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
 			"version": "15"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-xml"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
