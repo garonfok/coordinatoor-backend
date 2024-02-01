@@ -31,13 +31,13 @@ public class UserController {
   }
 
   @GetMapping(path = "/email/{email}", produces = "application/json")
-  public Profile getUserByEmail(@PathVariable("email") String email) {
-    return userRepository.findByEmail(email).orElse(null);
+  public List<Profile> getUserByEmail(@PathVariable("email") String email) {
+    return userRepository.findByEmailContainingIgnoreCaseOrderByEmailAsc(email);
   }
 
   @GetMapping(path = "/username/{username}", produces = "application/json")
-  public Profile getUserByUsername(@PathVariable("username") String username) {
-    return userRepository.findByUsername(username).orElse(null);
+  public List<Profile> getUserByUsername(@PathVariable("username") String username) {
+    return userRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
