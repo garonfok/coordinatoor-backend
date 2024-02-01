@@ -12,7 +12,7 @@ import com.coordinatoor.backend.model.Profile;
 public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
   Optional<Profile> findByEmail(String email);
 
-  Optional<Profile> findByUsername(String email);
+  Optional<Profile> findByUsername(String username);
 
   List<Profile> getAllByUsername(String username);
 }
