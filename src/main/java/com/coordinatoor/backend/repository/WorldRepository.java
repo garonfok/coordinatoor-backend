@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.coordinatoor.backend.model.World;
+import com.coordinatoor.backend.entity.World;
 
 @Repository
 public interface WorldRepository extends ListCrudRepository<World, Long> {

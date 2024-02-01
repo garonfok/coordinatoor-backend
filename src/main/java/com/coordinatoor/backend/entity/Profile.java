@@ -1,4 +1,4 @@
-package com.coordinatoor.backend.model;
+package com.coordinatoor.backend.entity;
 
 import java.util.HashSet;
 import java.util.Set;

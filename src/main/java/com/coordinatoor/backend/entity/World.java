@@ -1,9 +1,9 @@
-package com.coordinatoor.backend.model;
+package com.coordinatoor.backend.entity;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.coordinatoor.backend.model.WorldCoordinate.DimensionEnum;
+import com.coordinatoor.backend.entity.WorldCoordinate.DimensionEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

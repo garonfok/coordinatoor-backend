@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coordinatoor.backend.model.Profile;
+import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.repository.ProfileRepository;
 
 @RestController

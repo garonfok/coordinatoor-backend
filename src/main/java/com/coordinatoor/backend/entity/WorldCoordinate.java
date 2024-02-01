@@ -1,4 +1,4 @@
-package com.coordinatoor.backend.model;
+package com.coordinatoor.backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

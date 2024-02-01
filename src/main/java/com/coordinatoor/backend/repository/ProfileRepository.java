@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.coordinatoor.backend.model.Profile;
+import com.coordinatoor.backend.entity.Profile;
 
 @Repository
 public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
