@@ -10,38 +10,38 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coordinatoor.backend.model.User;
-import com.coordinatoor.backend.repository.UserRepository;
+import com.coordinatoor.backend.model.Profile;
+import com.coordinatoor.backend.repository.ProfileRepository;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
   @Autowired
-  UserRepository userRepository;
+  ProfileRepository userRepository;
 
   @GetMapping("/")
-  public List<User> getAllUsers() {
+  public List<Profile> getAllUsers() {
     return userRepository.findAll();
   }
 
   @GetMapping(path = "/{id}", produces = "application/json")
-  public User getUser(@PathVariable("id") Long id) {
+  public Profile getUser(@PathVariable("id") Long id) {
     return userRepository.findById(id).orElse(null);
   }
 
   @GetMapping(path = "/email/{email}", produces = "application/json")
-  public User getUserByEmail(@PathVariable("email") String email) {
+  public Profile getUserByEmail(@PathVariable("email") String email) {
     return userRepository.findByEmail(email).orElse(null);
   }
 
   @GetMapping(path = "/username/{username}", produces = "application/json")
-  public User getUserByUsername(@PathVariable("username") String username) {
+  public Profile getUserByUsername(@PathVariable("username") String username) {
     return userRepository.findByUsername(username).orElse(null);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-  public User createUser(User user) {
+  public Profile createUser(Profile user) {
     return userRepository.save(user);
   }
 

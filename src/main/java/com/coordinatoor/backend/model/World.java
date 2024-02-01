@@ -35,15 +35,15 @@ public class World {
 
   @ManyToOne
   @JoinColumn(name = "fk_user")
-  private User owner;
+  private Profile owner;
 
   @ManyToMany
-  private Set<User> editors = new HashSet<>();
+  private Set<Profile> editors = new HashSet<>();
 
   @ManyToMany
-  private Set<User> viewers = new HashSet<>();
+  private Set<Profile> viewers = new HashSet<>();
 
-  public World(String name, String seed, String ipAddress, User owner) {
+  public World(String name, String seed, String ipAddress, Profile owner) {
     this.name = name;
     this.seed = seed;
     this.ipAddress = ipAddress;
@@ -102,28 +102,28 @@ public class World {
     return coordinates;
   }
 
-  public User getOwner() {
+  public Profile getOwner() {
     return this.owner;
   }
 
-  public Set<User> getEditors() {
+  public Set<Profile> getEditors() {
     return this.editors;
   }
 
-  public Set<User> getViewers() {
+  public Set<Profile> getViewers() {
     return this.viewers;
   }
 
-  public boolean isOwner(User user) {
-    return this.owner.equals(user);
+  public boolean isOwner(Profile profile) {
+    return this.owner.equals(profile);
   }
 
-  public boolean isEditor(User user) {
-    return this.editors.contains(user);
+  public boolean isEditor(Profile profile) {
+    return this.editors.contains(profile);
   }
 
-  public boolean isViewer(User user) {
-    return this.viewers.contains(user);
+  public boolean isViewer(Profile profile) {
+    return this.viewers.contains(profile);
   }
 
   public void setName(String name) {
@@ -138,11 +138,11 @@ public class World {
     this.ipAddress = ipAddress;
   }
 
-  public void setOwner(User owner) {
+  public void setOwner(Profile owner) {
     this.owner = owner;
   }
 
-  public void addEditor(User editor) {
+  public void addEditor(Profile editor) {
     if (this.owner.equals(editor)) {
       throw new IllegalArgumentException("Owner cannot be added as editor");
     }
@@ -150,11 +150,11 @@ public class World {
     this.editors.add(editor);
   }
 
-  public void removeEditor(User editor) {
+  public void removeEditor(Profile editor) {
     this.editors.remove(editor);
   }
 
-  public void addViewer(User viewer) {
+  public void addViewer(Profile viewer) {
     if (this.owner.equals(viewer)) {
       throw new IllegalArgumentException("Owner cannot be added as viewer");
     }
@@ -162,7 +162,7 @@ public class World {
     this.viewers.add(viewer);
   }
 
-  public void removeViewer(User viewer) {
+  public void removeViewer(Profile viewer) {
     this.viewers.remove(viewer);
   }
 }

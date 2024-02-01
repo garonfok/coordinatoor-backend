@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class User {
+public class Profile {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,14 +33,16 @@ public class User {
   @ManyToMany
   private Set<World> viewerWorlds = new HashSet<>();
 
-  public User(String username, String email) {
+  // protected Profile() {}
+
+  public Profile(String username, String email) {
     this.username = username;
     this.email = email;
   }
 
   @Override
   public String toString() {
-    return String.format("User[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
+    return String.format("Profile[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
   }
 
   @Override
@@ -48,8 +50,8 @@ public class User {
     if (o == null || this.getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
-    return user.getId().equals(this.id);
+    Profile profile = (Profile) o;
+    return profile.getId().equals(this.id);
   }
 
   @Override
