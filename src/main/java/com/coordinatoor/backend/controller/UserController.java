@@ -15,7 +15,7 @@ import com.coordinatoor.backend.model.World;
 import com.coordinatoor.backend.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
   @Autowired
