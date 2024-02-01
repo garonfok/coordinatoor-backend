@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coordinatoor.backend.model.User;
-import com.coordinatoor.backend.model.World;
 import com.coordinatoor.backend.repository.UserRepository;
 
 @RestController
@@ -39,16 +38,6 @@ public class UserController {
   @GetMapping(path = "/username/{username}", produces = "application/json")
   public User getUserByUsername(@PathVariable("username") String username) {
     return userRepository.findByUsername(username).orElse(null);
-  }
-
-  @GetMapping(path = "/username/{username}", produces = "application/json")
-  public List<User> getAllUsersByUsername(@PathVariable("username") String username) {
-    return userRepository.getAllByUsername(username);
-  }
-
-  @GetMapping(path = "/world/{role}", produces = "application/json")
-  public List<World> getAllWorldsByRole(@PathVariable("role") String role) {
-    return userRepository.getAllWorldsByRole(role);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
