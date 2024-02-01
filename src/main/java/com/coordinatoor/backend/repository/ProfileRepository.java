@@ -9,7 +9,7 @@ import com.coordinatoor.backend.model.Profile;
 
 @Repository
 public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
-  List<Profile> findByEmailContaining(String email);
+  List<Profile> findByEmailContainingIgnoreCase(String email);
 
-  List<Profile> findByUsernameContaining(String username);
+  List<Profile> findByUsernameContainingIgnoreCase(String username);
 }
