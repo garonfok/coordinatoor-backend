@@ -14,39 +14,39 @@ import com.coordinatoor.backend.model.Profile;
 import com.coordinatoor.backend.repository.ProfileRepository;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/profile")
+public class ProfileController {
 
   @Autowired
-  ProfileRepository userRepository;
+  ProfileRepository profileRepository;
 
   @GetMapping("/")
-  public List<Profile> getAllUsers() {
-    return userRepository.findAll();
+  public List<Profile> getAllProfiles() {
+    return profileRepository.findAll();
   }
 
   @GetMapping(path = "/{id}", produces = "application/json")
   public Profile getUser(@PathVariable("id") Long id) {
-    return userRepository.findById(id).orElse(null);
+    return profileRepository.findById(id).orElse(null);
   }
 
   @GetMapping(path = "/email/{email}", produces = "application/json")
   public List<Profile> getUserByEmail(@PathVariable("email") String email) {
-    return userRepository.findByEmailContainingIgnoreCaseOrderByEmailAsc(email);
+    return profileRepository.findByEmailContainingIgnoreCaseOrderByEmailAsc(email);
   }
 
   @GetMapping(path = "/username/{username}", produces = "application/json")
   public List<Profile> getUserByUsername(@PathVariable("username") String username) {
-    return userRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
+    return profileRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
   public Profile createUser(Profile user) {
-    return userRepository.save(user);
+    return profileRepository.save(user);
   }
 
   @DeleteMapping(path = "/{id}")
   public void deleteUser(@PathVariable("id") Long id) {
-    userRepository.deleteById(id);
+    profileRepository.deleteById(id);
   }
 }
