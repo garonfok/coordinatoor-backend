@@ -5,7 +5,7 @@ volumes:
 
 services:
   app:
-    container_name: javadev
+    container_name: coordinatoor-backend
     build:
       context: .
       dockerfile: Dockerfile
