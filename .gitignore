@@ -31,4 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-.devcontainer/devcontainer.env
+.devcontainer/.env
