@@ -9,5 +9,5 @@ import com.coordinatoor.backend.entity.World;
 
 @Repository
 public interface WorldRepository extends ListCrudRepository<World, Long> {
-  List<World> findByNameContainingIgnoreCaseOrderByEmailAsc(String name);
+  List<World> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
 }
