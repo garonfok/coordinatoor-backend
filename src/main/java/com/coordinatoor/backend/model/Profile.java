@@ -33,7 +33,7 @@ public class Profile {
   @ManyToMany
   private Set<World> viewerWorlds = new HashSet<>();
 
-  // protected Profile() {}
+  protected Profile() {}
 
   public Profile(String username, String email) {
     this.username = username;

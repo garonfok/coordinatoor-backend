@@ -39,6 +39,8 @@ public class WorldCoordinate {
   @JoinColumn(name = "fk_world")
   private World world;
 
+  protected WorldCoordinate() {}
+
   public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {
     this.name = name;
     this.x = x;

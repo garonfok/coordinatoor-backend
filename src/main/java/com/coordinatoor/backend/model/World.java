@@ -43,6 +43,8 @@ public class World {
   @ManyToMany
   private Set<Profile> viewers = new HashSet<>();
 
+  protected World() {}
+
   public World(String name, String seed, String ipAddress, Profile owner) {
     this.name = name;
     this.seed = seed;
