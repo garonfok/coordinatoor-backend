@@ -24,7 +24,7 @@ public class WorldController {
     return worldRepository.findById(id).orElse(null);
   }
 
-  @GetMapping(path = "/name/{name}", produces = "application/json")
+  @GetMapping(path = "/search/name/{name}", produces = "application/json")
   public List<World> getWorldByName(String name) {
     return worldRepository.findByNameContains(name);
   }
