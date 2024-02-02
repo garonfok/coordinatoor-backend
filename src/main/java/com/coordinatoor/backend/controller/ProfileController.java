@@ -25,6 +25,11 @@ public class ProfileController {
     return profileRepository.findById(id).orElse(null);
   }
 
+  @GetMapping(path = "/email/{email}", produces = "application/json")
+  public Profile getProfileByEmail(@PathVariable("email") String email) {
+    return profileRepository.findByEmail(email).orElse(null);
+  }
+
   @GetMapping(path = "/search/email/{email}", produces = "application/json")
   public List<Profile> getUserByEmail(@PathVariable("email") String email) {
     return profileRepository.findByEmailContains(email);
