@@ -26,7 +26,7 @@ public class WorldController {
 
   @GetMapping(path = "/name/{name}", produces = "application/json")
   public List<World> getWorldByName(String name) {
-    return worldRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+    return worldRepository.findByNameContains(name);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
