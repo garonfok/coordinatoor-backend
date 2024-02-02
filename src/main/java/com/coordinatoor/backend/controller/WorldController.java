@@ -19,11 +19,6 @@ public class WorldController {
   @Autowired
   WorldRepository worldRepository;
 
-  @GetMapping("/")
-  public List<World> getAllWorlds() {
-    return worldRepository.findAll();
-  }
-
   @GetMapping(path = "/{id}", produces = "application/json")
   public World getWorld(Long id) {
     return worldRepository.findById(id).orElse(null);

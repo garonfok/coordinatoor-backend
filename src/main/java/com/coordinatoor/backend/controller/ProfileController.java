@@ -20,11 +20,6 @@ public class ProfileController {
   @Autowired
   ProfileRepository profileRepository;
 
-  @GetMapping("/")
-  public List<Profile> getAllProfiles() {
-    return profileRepository.findAll();
-  }
-
   @GetMapping(path = "/{id}", produces = "application/json")
   public Profile getUser(@PathVariable("id") Long id) {
     return profileRepository.findById(id).orElse(null);
