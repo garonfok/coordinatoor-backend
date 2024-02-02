@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class WorldCoordinate {
+public class WorldCoordinate extends Auditable {
 
   public enum DimensionEnum {
     OVERWORLD,
@@ -39,7 +39,8 @@ public class WorldCoordinate {
   @JoinColumn(name = "fk_world")
   private World world;
 
-  protected WorldCoordinate() {}
+  protected WorldCoordinate() {
+  }
 
   public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {
     this.name = name;

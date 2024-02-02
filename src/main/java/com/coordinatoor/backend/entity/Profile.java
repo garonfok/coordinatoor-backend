@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Profile {
+public class Profile extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,8 @@ public class Profile {
   @ManyToMany
   private Set<World> viewerWorlds = new HashSet<>();
 
-  protected Profile() {}
+  protected Profile() {
+  }
 
   public Profile(String username, String email) {
     this.username = username;

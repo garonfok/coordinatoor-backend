@@ -16,7 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class World {
+public class World extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,8 @@ public class World {
   @ManyToMany
   private Set<Profile> viewers = new HashSet<>();
 
-  protected World() {}
+  protected World() {
+  }
 
   public World(String name, String seed, String ipAddress, Profile owner) {
     this.name = name;
