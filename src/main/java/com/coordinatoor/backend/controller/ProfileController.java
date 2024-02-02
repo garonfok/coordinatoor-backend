@@ -32,12 +32,12 @@ public class ProfileController {
 
   @GetMapping(path = "/email/{email}", produces = "application/json")
   public List<Profile> getUserByEmail(@PathVariable("email") String email) {
-    return profileRepository.findByEmailContainingIgnoreCaseOrderByEmailAsc(email);
+    return profileRepository.findByEmailContains(email);
   }
 
   @GetMapping(path = "/username/{username}", produces = "application/json")
   public List<Profile> getUserByUsername(@PathVariable("username") String username) {
-    return profileRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
+    return profileRepository.findByUsernameContains(username);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
