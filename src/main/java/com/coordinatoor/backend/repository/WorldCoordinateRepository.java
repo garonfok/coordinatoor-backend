@@ -12,8 +12,8 @@ import com.coordinatoor.backend.entity.WorldCoordinate.DimensionEnum;
 @Repository
 public interface WorldCoordinateRepository extends ListCrudRepository<WorldCoordinate, Long> {
 
-  public List<WorldCoordinate> findAllByWorldOrderByName(World world);
+  public List<WorldCoordinate> findByWorldOrderByName(World world);
 
-  public List<WorldCoordinate> findAllByWorldAndDimensionOrderByName(World world, DimensionEnum dimension);
+  public List<WorldCoordinate> findByWorldAndDimensionOrderByName(World world, DimensionEnum dimension);
 
 }
