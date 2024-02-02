@@ -18,6 +18,15 @@ public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
   @Query("""
       SELECT p
       FROM Profile p
+      JOIN p.ownerWorlds w
+      WHERE w = :world
+      ORDER BY p.username ASC
+      """)
+  Profile findByOwner(World world);
+
+  @Query("""
+      SELECT p
+      FROM Profile p
       JOIN p.editorWorlds w
       WHERE w = :world
       ORDER BY p.username ASC
