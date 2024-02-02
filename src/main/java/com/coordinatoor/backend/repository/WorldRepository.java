@@ -11,12 +11,12 @@ import com.coordinatoor.backend.entity.World;
 @Repository
 public interface WorldRepository extends ListCrudRepository<World, Long> {
 
-  @Query("""
+  @Query(value = """
       SELECT p
       FROM Profile p
       WHERE p.name
         LIKE %:name%
       ORDER BY p.name ASC
-        """)
+        """, nativeQuery = true)
   List<World> findByNameContains(String name);
 }
