@@ -3,6 +3,9 @@ package com.coordinatoor.backend.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.coordinatoor.backend.entity.WorldCoordinate.DimensionEnum;
 
 import jakarta.persistence.Column;
@@ -31,6 +34,7 @@ public class World extends Auditable {
   private String ipAddress;
 
   @OneToMany(mappedBy = "world")
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Set<WorldCoordinate> coordinates = new HashSet<>();
 
   @ManyToOne
