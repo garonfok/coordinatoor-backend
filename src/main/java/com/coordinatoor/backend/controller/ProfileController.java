@@ -21,7 +21,7 @@ public class ProfileController {
   ProfileRepository profileRepository;
 
   @GetMapping(path = "/{id}", produces = "application/json")
-  public Profile getUser(@PathVariable("id") Long id) {
+  public Profile getProfile(@PathVariable("id") Long id) {
     return profileRepository.findById(id).orElse(null);
   }
 
@@ -31,22 +31,22 @@ public class ProfileController {
   }
 
   @GetMapping(path = "/search/email/{email}", produces = "application/json")
-  public List<Profile> getUserByEmail(@PathVariable("email") String email) {
+  public List<Profile> getProfilesByEmail(@PathVariable("email") String email) {
     return profileRepository.findByEmailContains(email);
   }
 
   @GetMapping(path = "/search/username/{username}", produces = "application/json")
-  public List<Profile> getUserByUsername(@PathVariable("username") String username) {
+  public List<Profile> getProfilesByUsername(@PathVariable("username") String username) {
     return profileRepository.findByUsernameContains(username);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-  public Profile createUser(Profile user) {
-    return profileRepository.save(user);
+  public Profile createProfile(Profile profile) {
+    return profileRepository.save(profile);
   }
 
   @DeleteMapping(path = "/{id}")
-  public void deleteUser(@PathVariable("id") Long id) {
+  public void deleteProfile(@PathVariable("id") Long id) {
     profileRepository.deleteById(id);
   }
 }
