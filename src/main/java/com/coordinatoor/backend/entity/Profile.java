@@ -1,10 +1,15 @@
 package com.coordinatoor.backend.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +18,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "worlds" })
 public class Profile extends Auditable {
 
   @Id
@@ -26,6 +31,9 @@ public class Profile extends Auditable {
 
   @Column(unique = true)
   private String email;
+
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<WorldProfile> worlds = new HashSet<>();
 
   public Profile(String username, String email) {
     this.username = username;

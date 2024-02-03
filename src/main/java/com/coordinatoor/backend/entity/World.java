@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, exclude = { "coordinates" })
+@EqualsAndHashCode(callSuper = false, exclude = { "coordinates", "profiles" })
 public class World extends Auditable {
 
   @Id
@@ -41,6 +41,9 @@ public class World extends Auditable {
   @OneToMany(mappedBy = "world", cascade = CascadeType.ALL, orphanRemoval = true)
   @Setter
   private Set<WorldCoordinate> coordinates = new HashSet<>();
+
+  @OneToMany(mappedBy = "world", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<WorldProfile> profiles = new HashSet<>();
 
   public World(String name, String seed, String ipAddress) {
     this.name = name;
@@ -74,5 +77,30 @@ public class World extends Auditable {
   public void removeCoordinate(WorldCoordinate coordinate) {
     this.coordinates.remove(coordinate);
     coordinate.setWorld(null);
+  }
+
+  public void addProfile(Profile profile, WorldProfile.RoleEnum role) {
+    WorldProfile worldProfile = new WorldProfile(this, profile, role);
+    this.profiles.add(worldProfile);
+    profile.getWorlds().add(worldProfile);
+  }
+
+  public void removeProfile(Profile profile) {
+    for (WorldProfile worldProfile : this.profiles) {
+      if (worldProfile.getProfile().equals(profile)) {
+        this.profiles.remove(worldProfile);
+        worldProfile.getProfile().getWorlds().remove(worldProfile);
+        worldProfile.setWorld(null);
+        worldProfile.setProfile(null);
+      }
+    }
+  }
+
+  public void setRole(Profile profile, WorldProfile.RoleEnum role) {
+    for (WorldProfile worldProfile : this.profiles) {
+      if (worldProfile.getProfile().equals(profile)) {
+        worldProfile.setRole(role);
+      }
+    }
   }
 }
