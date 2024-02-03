@@ -53,40 +53,4 @@ public class Profile extends Auditable {
   public String toString() {
     return String.format("Profile[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
   }
-
-  public boolean isOwner(World world) {
-    return this.ownerWorlds.contains(world);
-  }
-
-  public boolean isEditor(World world) {
-    return this.editorWorlds.contains(world);
-  }
-
-  public boolean isViewer(World world) {
-    return this.viewerWorlds.contains(world);
-  }
-
-  public void addOwnerWorld(World world) {
-    this.ownerWorlds.add(world);
-  }
-
-  public void addEditorWorld(World world) {
-    this.editorWorlds.add(world);
-  }
-
-  public void addViewerWorld(World world) {
-    this.viewerWorlds.add(world);
-  }
-
-  public void removeOwnerWorld(World world) {
-    this.ownerWorlds.remove(world);
-  }
-
-  public void removeEditorWorld(World world) {
-    this.editorWorlds.remove(world);
-  }
-
-  public void removeViewerWorld(World world) {
-    this.viewerWorlds.remove(world);
-  }
 }

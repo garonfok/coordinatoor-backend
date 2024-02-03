@@ -54,9 +54,11 @@ public class World extends Auditable {
   private Profile owner;
 
   @ManyToMany
+  @Setter
   private Set<Profile> editors = new HashSet<>();
 
   @ManyToMany
+  @Setter
   private Set<Profile> viewers = new HashSet<>();
 
   public World(String name, String seed, String ipAddress, Profile owner) {
@@ -82,41 +84,5 @@ public class World extends Auditable {
     }
 
     return coordinates;
-  }
-
-  public boolean isOwner(Profile profile) {
-    return this.owner.equals(profile);
-  }
-
-  public boolean isEditor(Profile profile) {
-    return this.editors.contains(profile);
-  }
-
-  public boolean isViewer(Profile profile) {
-    return this.viewers.contains(profile);
-  }
-
-  public void addEditor(Profile editor) {
-    if (this.owner.equals(editor)) {
-      throw new IllegalArgumentException("Owner cannot be added as editor");
-    }
-
-    this.editors.add(editor);
-  }
-
-  public void removeEditor(Profile editor) {
-    this.editors.remove(editor);
-  }
-
-  public void addViewer(Profile viewer) {
-    if (this.owner.equals(viewer)) {
-      throw new IllegalArgumentException("Owner cannot be added as viewer");
-    }
-
-    this.viewers.add(viewer);
-  }
-
-  public void removeViewer(Profile viewer) {
-    this.viewers.remove(viewer);
   }
 }
