@@ -10,8 +10,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(callSuper = false)
 public class Profile extends Auditable {
 
   @Id
@@ -19,22 +26,23 @@ public class Profile extends Auditable {
   private Long id;
 
   @Column(unique = true)
+  @Setter
   private String username;
 
   @Column(unique = true)
   private String email;
 
   @OneToMany(mappedBy = "owner")
+  @Setter
   private Set<World> ownerWorlds = new HashSet<>();
 
   @ManyToMany
+  @Setter
   private Set<World> editorWorlds = new HashSet<>();
 
   @ManyToMany
+  @Setter
   private Set<World> viewerWorlds = new HashSet<>();
-
-  protected Profile() {
-  }
 
   public Profile(String username, String email) {
     this.username = username;
@@ -44,44 +52,6 @@ public class Profile extends Auditable {
   @Override
   public String toString() {
     return String.format("Profile[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-    Profile profile = (Profile) o;
-    return profile.getId().equals(this.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return this.id.hashCode();
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public String getUsername() {
-    return this.username;
-  }
-
-  public String getEmail() {
-    return this.email;
-  }
-
-  public Set<World> getOwnerWorlds() {
-    return this.ownerWorlds;
-  }
-
-  public Set<World> getEditorWorlds() {
-    return this.editorWorlds;
-  }
-
-  public Set<World> getViewerWorlds() {
-    return this.viewerWorlds;
   }
 
   public boolean isOwner(World world) {
@@ -94,10 +64,6 @@ public class Profile extends Auditable {
 
   public boolean isViewer(World world) {
     return this.viewerWorlds.contains(world);
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   public void addOwnerWorld(World world) {

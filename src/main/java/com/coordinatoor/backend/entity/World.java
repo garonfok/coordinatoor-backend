@@ -17,28 +17,40 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class World extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   private String name;
 
   @Column(nullable = true)
+  @Setter
   private String seed;
 
   @Column(nullable = true)
+  @Setter
   private String ipAddress;
 
   @OneToMany(mappedBy = "world")
   @OnDelete(action = OnDeleteAction.CASCADE)
+  @Setter
   private Set<WorldCoordinate> coordinates = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "fk_user")
+  @Setter
   private Profile owner;
 
   @ManyToMany
@@ -46,9 +58,6 @@ public class World extends Auditable {
 
   @ManyToMany
   private Set<Profile> viewers = new HashSet<>();
-
-  protected World() {
-  }
 
   public World(String name, String seed, String ipAddress, Profile owner) {
     this.name = name;
@@ -63,40 +72,6 @@ public class World extends Auditable {
         this.ipAddress);
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-    World world = (World) o;
-    return world.getId().equals(this.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return this.id.hashCode();
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public String getSeed() {
-    return this.seed;
-  }
-
-  public String getIpAddress() {
-    return this.ipAddress;
-  }
-
-  public Set<WorldCoordinate> getCoordinates() {
-    return this.coordinates;
-  }
-
   public Set<WorldCoordinate> getCoordinates(DimensionEnum dimension) {
     Set<WorldCoordinate> coordinates = new HashSet<>();
 
@@ -109,18 +84,6 @@ public class World extends Auditable {
     return coordinates;
   }
 
-  public Profile getOwner() {
-    return this.owner;
-  }
-
-  public Set<Profile> getEditors() {
-    return this.editors;
-  }
-
-  public Set<Profile> getViewers() {
-    return this.viewers;
-  }
-
   public boolean isOwner(Profile profile) {
     return this.owner.equals(profile);
   }
@@ -131,22 +94,6 @@ public class World extends Auditable {
 
   public boolean isViewer(Profile profile) {
     return this.viewers.contains(profile);
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setSeed(String seed) {
-    this.seed = seed;
-  }
-
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress = ipAddress;
-  }
-
-  public void setOwner(Profile owner) {
-    this.owner = owner;
   }
 
   public void addEditor(Profile editor) {
