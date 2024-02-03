@@ -9,8 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(callSuper = false)
 public class WorldCoordinate extends Auditable {
 
   public enum DimensionEnum {
@@ -23,24 +30,27 @@ public class WorldCoordinate extends Auditable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   private String name;
 
+  @Setter
   private int x;
 
+  @Setter
   private int y;
 
+  @Setter
   private int z;
 
   @Enumerated(EnumType.STRING)
   @Column(columnDefinition = "varchar(255) default 'OVERWORLD'")
+  @Setter
   private DimensionEnum dimension;
 
   @ManyToOne
   @JoinColumn(name = "fk_world")
+  @Setter
   private World world;
-
-  protected WorldCoordinate() {
-  }
 
   public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {
     this.name = name;
@@ -55,67 +65,5 @@ public class WorldCoordinate extends Auditable {
   public String toString() {
     return String.format("WorldCoordinate[id=%d, name='%s', x='%d', y='%d', z='%d', dimension='%s']", this.id,
         this.name, this.x, this.y, this.z, this.dimension);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-    WorldCoordinate worldCoordinate = (WorldCoordinate) o;
-    return worldCoordinate.getId().equals(this.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return this.id.hashCode();
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public int getX() {
-    return this.x;
-  }
-
-  public int getY() {
-    return this.y;
-  }
-
-  public int getZ() {
-    return this.z;
-  }
-
-  public DimensionEnum getDimension() {
-    return this.dimension;
-  }
-
-  public World getWorld() {
-    return this.world;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setX(int x) {
-    this.x = x;
-  }
-
-  public void setY(int y) {
-    this.y = y;
-  }
-
-  public void setZ(int z) {
-    this.z = z;
-  }
-
-  public void setDimension(DimensionEnum dimension) {
-    this.dimension = dimension;
   }
 }
