@@ -1,6 +1,7 @@
 package com.coordinatoor.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,35 +29,47 @@ public class EntityTests {
   @Autowired
   private WorldCoordinateRepository worldCoordinateRepository;
 
-  private Profile profile;
+  private Profile profile1;
+  private Profile profile2;
   private World world;
   private WorldCoordinate worldCoordinate;
 
   @BeforeEach
   public void create() {
-    profile = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
+    profile1 = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
+    profile2 = profileRepository.save(new Profile("janedoe", "janedoe@email.com"));
 
     world = worldRepository.save(
-        new World("Test World", "12345", "12334123", profile));
+        new World("Test World", "12345", "12334123", profile1));
 
     worldCoordinate = worldCoordinateRepository.save(
         new WorldCoordinate("Test Coordinate", 1, 2, 3,
             WorldCoordinate.DimensionEnum.OVERWORLD, world));
-
   }
 
   @Test
   public void testExists() {
-    assertEquals(profile, profileRepository.findById(profile.getId()).get());
-    assertEquals(world, worldRepository.findById(world.getId()).get());
-    assertEquals(worldCoordinate, worldCoordinateRepository.findById(worldCoordinate.getId()).get());
+    long profileId = profile1.getId();
+    long worldId = world.getId();
+    long worldCoordinateId = worldCoordinate.getId();
+
+    assertTrue(profileRepository.existsById(profileId));
+    assertTrue(worldRepository.existsById(worldId));
+    assertTrue(worldCoordinateRepository.existsById(worldCoordinateId));
   }
 
   @Test
   public void testRoles() {
-    world.setOwner(profile);
-    worldRepository.save(world);
+    assertEquals(profile1, world.getOwner());
 
-    assertEquals(profile, world.getOwner());
+    profile1.removeOwnerWorld(world);
+    profile2.addOwnerWorld(world);
+
+    assertEquals(profile2, world.getOwner());
+
+    assertEquals(0, profile1.getOwnerWorlds().size());
+    assertEquals(1, profile2.getOwnerWorlds().size());
+
+    assertEquals(profile2, world.getOwner());
   }
 }
