@@ -71,7 +71,17 @@ public class EntityTests {
 
     assertEquals(0, profile1.getOwnerWorlds().size());
     assertEquals(1, profile2.getOwnerWorlds().size());
-
     assertEquals(profile2, world.getOwner());
+
+    world.addEditor(profile1);
+
+    Profile profile3 = profileRepository.save(new Profile("James Wong", "jameswong@email.com"));
+
+    world.addEditor(profile3);
+    world.addViewer(profile2);
+
+    assertEquals(2, world.getEditors().size());
+    assertEquals(1, world.getViewers().size());
+    assertTrue(profile2.getViewerWorlds().contains(world));
   }
 }
