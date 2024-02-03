@@ -1,6 +1,7 @@
 package com.coordinatoor.backend;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.entity.World;
 import com.coordinatoor.backend.entity.WorldCoordinate;
+import com.coordinatoor.backend.entity.WorldProfile.RoleEnum;
 import com.coordinatoor.backend.repository.ProfileRepository;
 import com.coordinatoor.backend.repository.WorldCoordinateRepository;
 import com.coordinatoor.backend.repository.WorldRepository;
@@ -55,5 +57,23 @@ public class EntityTests {
     assertTrue(profileRepository.existsById(profileId));
     assertTrue(worldRepository.existsById(worldId));
     assertTrue(worldCoordinateRepository.existsById(worldCoordinateId));
+  }
+
+  @Test
+  public void testRoles() {
+    Profile profile1 = profileRepository.save(new Profile("janedoe", "janedoe@email.com"));
+    Profile profile2 = profileRepository.save(new Profile("jameswong", "jameswong@email.com"));
+    Profile profile3 = profileRepository.save(new Profile("jacksmith", "jacksmith@email.com"));
+    Profile profile4 = profileRepository.save(new Profile("marysue", "marysue@email.com"));
+
+    world.addProfile(profile1, RoleEnum.OWNER);
+    world.addProfile(profile2, RoleEnum.EDITOR);
+    world.addProfile(profile3, RoleEnum.VIEWER);
+    world.addProfile(profile4, RoleEnum.VIEWER);
+
+    assertEquals(4, world.getProfiles().size());
+    world.removeProfile(profile4);
+    assertEquals(3, world.getProfiles().size());
+    world.setRole(profile3, RoleEnum.EDITOR);
   }
 }
