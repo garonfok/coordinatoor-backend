@@ -3,8 +3,9 @@ package com.coordinatoor.backend;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,6 +18,7 @@ import com.coordinatoor.backend.repository.WorldCoordinateRepository;
 import com.coordinatoor.backend.repository.WorldRepository;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public class EntityTests {
 
@@ -34,7 +36,7 @@ public class EntityTests {
   private World world;
   private WorldCoordinate worldCoordinate;
 
-  @BeforeEach
+  @BeforeAll
   public void create() {
     profile1 = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
     profile2 = profileRepository.save(new Profile("janedoe", "janedoe@email.com"));
