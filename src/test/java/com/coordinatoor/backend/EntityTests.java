@@ -30,13 +30,13 @@ public class EntityTests {
   @Autowired
   private WorldCoordinateRepository worldCoordinateRepository;
 
-  private Profile profile1;
+  private Profile profile;
   private World world;
   private WorldCoordinate worldCoordinate;
 
   @BeforeAll
   public void create() {
-    profile1 = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
+    profile = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
 
     world = worldRepository.save(
         new World("Test World", "12345", "12334123"));
@@ -48,7 +48,7 @@ public class EntityTests {
 
   @Test
   public void testExists() {
-    long profileId = profile1.getId();
+    long profileId = profile.getId();
     long worldId = world.getId();
     long worldCoordinateId = worldCoordinate.getId();
 
