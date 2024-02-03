@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "ownerWorlds", "editorWorlds", "viewerWorlds" })
 public class Profile extends Auditable {
 
   @Id
@@ -33,15 +33,12 @@ public class Profile extends Auditable {
   private String email;
 
   @OneToMany(mappedBy = "owner")
-  @Setter
   private Set<World> ownerWorlds = new HashSet<>();
 
   @ManyToMany
-  @Setter
   private Set<World> editorWorlds = new HashSet<>();
 
   @ManyToMany
-  @Setter
   private Set<World> viewerWorlds = new HashSet<>();
 
   public Profile(String username, String email) {
@@ -52,5 +49,35 @@ public class Profile extends Auditable {
   @Override
   public String toString() {
     return String.format("Profile[id=%d, username='%s', email='%s']", this.id, this.username, this.email);
+  }
+
+  public void addOwnerWorld(World world) {
+    this.ownerWorlds.add(world);
+    world.setOwner(this);
+  }
+
+  public void removeOwnerWorld(World world) {
+    this.ownerWorlds.remove(world);
+    world.setOwner(null);
+  }
+
+  public void addEditorWorld(World world) {
+    this.editorWorlds.add(world);
+    world.getEditors().add(this);
+  }
+
+  public void removeEditorWorld(World world) {
+    this.editorWorlds.remove(world);
+    world.getEditors().remove(this);
+  }
+
+  public void addViewerWorld(World world) {
+    this.viewerWorlds.add(world);
+    world.getViewers().add(this);
+  }
+
+  public void removeViewerWorld(World world) {
+    this.viewerWorlds.remove(world);
+    world.getViewers().remove(this);
   }
 }

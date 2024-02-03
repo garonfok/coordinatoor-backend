@@ -25,7 +25,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "coordinates", "editors", "viewers" })
 public class World extends Auditable {
 
   @Id
@@ -54,11 +54,9 @@ public class World extends Auditable {
   private Profile owner;
 
   @ManyToMany
-  @Setter
   private Set<Profile> editors = new HashSet<>();
 
   @ManyToMany
-  @Setter
   private Set<Profile> viewers = new HashSet<>();
 
   public World(String name, String seed, String ipAddress, Profile owner) {
@@ -84,5 +82,15 @@ public class World extends Auditable {
     }
 
     return coordinates;
+  }
+
+  public void addCoordinate(WorldCoordinate coordinate) {
+    this.coordinates.add(coordinate);
+    coordinate.setWorld(this);
+  }
+
+  public void removeCoordinate(WorldCoordinate coordinate) {
+    this.coordinates.remove(coordinate);
+    coordinate.setWorld(null);
   }
 }
