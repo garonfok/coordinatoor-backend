@@ -1,11 +1,6 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/coordinatoor
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+  profiles:
+    active: dev
 server:
   servlet:
     context-path: /api
