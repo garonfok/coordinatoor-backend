@@ -60,24 +60,4 @@ public class Profile extends Auditable {
     this.ownerWorlds.remove(world);
     world.setOwner(null);
   }
-
-  public void addEditorWorld(World world) {
-    this.editorWorlds.add(world);
-    world.getEditors().add(this);
-  }
-
-  public void removeEditorWorld(World world) {
-    this.editorWorlds.remove(world);
-    world.getEditors().remove(this);
-  }
-
-  public void addViewerWorld(World world) {
-    this.viewerWorlds.add(world);
-    world.getViewers().add(this);
-  }
-
-  public void removeViewerWorld(World world) {
-    this.viewerWorlds.remove(world);
-    world.getViewers().remove(this);
-  }
 }

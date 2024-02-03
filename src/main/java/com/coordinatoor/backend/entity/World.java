@@ -91,4 +91,24 @@ public class World extends Auditable {
     this.coordinates.remove(coordinate);
     coordinate.setWorld(null);
   }
+
+  public void addEditor(Profile profile) {
+    this.editors.add(profile);
+    profile.getEditorWorlds().add(this);
+  }
+
+  public void removeEditor(Profile profile) {
+    this.editors.remove(profile);
+    profile.getEditorWorlds().remove(this);
+  }
+
+  public void addViewer(Profile profile) {
+    this.viewers.add(profile);
+    profile.getViewerWorlds().add(this);
+  }
+
+  public void removeViewer(Profile profile) {
+    this.viewers.remove(profile);
+    profile.getViewerWorlds().remove(this);
+  }
 }
