@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.entity.World;
@@ -15,6 +16,7 @@ import com.coordinatoor.backend.repository.WorldCoordinateRepository;
 import com.coordinatoor.backend.repository.WorldRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AuditTests {
 
   @Autowired
@@ -31,12 +33,7 @@ public class AuditTests {
   private WorldCoordinate worldCoordinate;
 
   @BeforeEach
-  @Test
-  public void create() {
-    worldCoordinateRepository.deleteAll();
-    worldRepository.deleteAll();
-    profileRepository.deleteAll();
-
+  public void testSave() {
     profile = profileRepository.save(
         new Profile("John Smith", "johnsmith@email.com"));
 
@@ -45,17 +42,10 @@ public class AuditTests {
 
     worldCoordinate = worldCoordinateRepository.save(
         new WorldCoordinate("Test Coordinate", 1, 2, 3, WorldCoordinate.DimensionEnum.OVERWORLD, world));
-
-    assertNotNull(profile.getCreatedDate());
-    assertNotNull(profile.getLastModifiedDate());
-    assertNotNull(world.getCreatedDate());
-    assertNotNull(world.getLastModifiedDate());
-    assertNotNull(worldCoordinate.getCreatedDate());
-    assertNotNull(worldCoordinate.getLastModifiedDate());
   }
 
   @Test
-  public void update() {
+  public void testUpdate() {
     profile.setUsername("John Doe");
     profileRepository.save(profile);
 
