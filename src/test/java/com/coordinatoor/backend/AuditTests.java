@@ -38,7 +38,7 @@ public class AuditTests {
         new Profile("John Smith", "johnsmith@email.com"));
 
     world = worldRepository.save(
-        new World("Test World", "12345", "12334123", profile));
+        new World("Test World", "12345", "12334123"));
 
     worldCoordinate = worldCoordinateRepository.save(
         new WorldCoordinate("Test Coordinate", 1, 2, 3, WorldCoordinate.DimensionEnum.OVERWORLD, world));

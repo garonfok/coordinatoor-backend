@@ -8,14 +8,9 @@ import com.coordinatoor.backend.entity.WorldCoordinate.DimensionEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, exclude = { "coordinates", "editors", "viewers" })
+@EqualsAndHashCode(callSuper = false, exclude = { "coordinates" })
 public class World extends Auditable {
 
   @Id
@@ -47,30 +42,10 @@ public class World extends Auditable {
   @Setter
   private Set<WorldCoordinate> coordinates = new HashSet<>();
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "fk_user")
-  @Setter
-  private Profile owner;
-
-  @ManyToMany(cascade = {
-      CascadeType.PERSIST,
-      CascadeType.MERGE
-  })
-  @JoinTable(name = "world_editor", joinColumns = @JoinColumn(name = "fk_world"), inverseJoinColumns = @JoinColumn(name = "fk_profile"))
-  private Set<Profile> editors = new HashSet<>();
-
-  @ManyToMany(cascade = {
-      CascadeType.PERSIST,
-      CascadeType.MERGE
-  })
-  @JoinTable(name = "world_viewer", joinColumns = @JoinColumn(name = "fk_world"), inverseJoinColumns = @JoinColumn(name = "fk_profile"))
-  private Set<Profile> viewers = new HashSet<>();
-
-  public World(String name, String seed, String ipAddress, Profile owner) {
+  public World(String name, String seed, String ipAddress) {
     this.name = name;
     this.seed = seed;
     this.ipAddress = ipAddress;
-    this.owner = owner;
   }
 
   @Override
@@ -99,25 +74,5 @@ public class World extends Auditable {
   public void removeCoordinate(WorldCoordinate coordinate) {
     this.coordinates.remove(coordinate);
     coordinate.setWorld(null);
-  }
-
-  public void addEditor(Profile profile) {
-    this.editors.add(profile);
-    profile.getEditorWorlds().add(this);
-  }
-
-  public void removeEditor(Profile profile) {
-    this.editors.remove(profile);
-    profile.getEditorWorlds().remove(this);
-  }
-
-  public void addViewer(Profile profile) {
-    this.viewers.add(profile);
-    profile.getViewerWorlds().add(this);
-  }
-
-  public void removeViewer(Profile profile) {
-    this.viewers.remove(profile);
-    profile.getViewerWorlds().remove(this);
   }
 }
