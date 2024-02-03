@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -51,10 +52,18 @@ public class World extends Auditable {
   @Setter
   private Profile owner;
 
-  @ManyToMany
+  @ManyToMany(cascade = {
+      CascadeType.PERSIST,
+      CascadeType.MERGE
+  })
+  @JoinTable(name = "world_editor", joinColumns = @JoinColumn(name = "fk_world"), inverseJoinColumns = @JoinColumn(name = "fk_profile"))
   private Set<Profile> editors = new HashSet<>();
 
-  @ManyToMany
+  @ManyToMany(cascade = {
+      CascadeType.PERSIST,
+      CascadeType.MERGE
+  })
+  @JoinTable(name = "world_viewer", joinColumns = @JoinColumn(name = "fk_world"), inverseJoinColumns = @JoinColumn(name = "fk_profile"))
   private Set<Profile> viewers = new HashSet<>();
 
   public World(String name, String seed, String ipAddress, Profile owner) {
