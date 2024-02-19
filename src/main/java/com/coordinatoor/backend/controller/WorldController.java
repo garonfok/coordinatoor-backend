@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.entity.World;
+import com.coordinatoor.backend.entity.WorldProfile.Role;
 import com.coordinatoor.backend.repository.ProfileRepository;
 import com.coordinatoor.backend.repository.WorldRepository;
 
@@ -34,12 +35,14 @@ public class WorldController {
 
   @GetMapping(path = "/search/name/{name}", produces = "application/json")
   public List<World> getWorldByName(@PathVariable String name) {
-    return worldRepository.findByNameContains(name);
+    return worldRepository.findByNameContainsIgnoreCase(name);
   }
 
   @GetMapping(path = "/user/{id}/owner", produces = "application/json")
   public Profile getWorldOwnerProfile(@PathVariable Long id) {
-    return profileRepository.findByWorldOwner(id);
+    List<Profile> owners = profileRepository.findByWorlds_WorldIdAndWorlds_RoleOrderByUsername(id, Role.OWNER);
+    return owners.isEmpty() ? null
+        : owners.get(0);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")

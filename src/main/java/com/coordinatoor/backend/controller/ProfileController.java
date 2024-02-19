@@ -34,12 +34,12 @@ public class ProfileController {
 
   @GetMapping(path = "/search/email/{email}", produces = "application/json")
   public List<Profile> getProfilesByEmail(@PathVariable String email) {
-    return profileRepository.findByEmailContains(email);
+    return profileRepository.findByEmailContainsIgnoreCaseOrderByUsername(email);
   }
 
   @GetMapping(path = "/search/username/{username}", produces = "application/json")
   public List<Profile> getProfilesByUsername(@PathVariable String username) {
-    return profileRepository.findByUsernameContains(username);
+    return profileRepository.findByUsernameContainsIgnoreCaseOrderByUsername(username);
   }
 
   @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
