@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.entity.World;
 import com.coordinatoor.backend.entity.WorldCoordinate;
-import com.coordinatoor.backend.entity.WorldProfile.RoleEnum;
+import com.coordinatoor.backend.entity.WorldProfile.Role;
 import com.coordinatoor.backend.repository.ProfileRepository;
 import com.coordinatoor.backend.repository.WorldCoordinateRepository;
 import com.coordinatoor.backend.repository.WorldRepository;
@@ -45,7 +45,7 @@ public class EntityTests {
 
     worldCoordinate = worldCoordinateRepository.save(
         new WorldCoordinate("Test Coordinate", 1, 2, 3,
-            WorldCoordinate.DimensionEnum.OVERWORLD, world));
+            WorldCoordinate.Dimension.OVERWORLD, world));
   }
 
   @Test
@@ -66,14 +66,14 @@ public class EntityTests {
     Profile profile3 = profileRepository.save(new Profile("jacksmith", "jacksmith@email.com"));
     Profile profile4 = profileRepository.save(new Profile("marysue", "marysue@email.com"));
 
-    world.addProfile(profile1, RoleEnum.OWNER);
-    world.addProfile(profile2, RoleEnum.EDITOR);
-    world.addProfile(profile3, RoleEnum.VIEWER);
-    world.addProfile(profile4, RoleEnum.VIEWER);
+    world.addProfile(profile1, Role.OWNER);
+    world.addProfile(profile2, Role.EDITOR);
+    world.addProfile(profile3, Role.VIEWER);
+    world.addProfile(profile4, Role.VIEWER);
 
     assertEquals(4, world.getProfiles().size());
     world.removeProfile(profile4);
     assertEquals(3, world.getProfiles().size());
-    world.setRole(profile3, RoleEnum.EDITOR);
+    world.setRole(profile3, Role.EDITOR);
   }
 }

@@ -41,7 +41,7 @@ public class AuditTests {
         new World("Test World", "12345", "12334123"));
 
     worldCoordinate = worldCoordinateRepository.save(
-        new WorldCoordinate("Test Coordinate", 1, 2, 3, WorldCoordinate.DimensionEnum.OVERWORLD, world));
+        new WorldCoordinate("Test Coordinate", 1, 2, 3, WorldCoordinate.Dimension.OVERWORLD, world));
   }
 
   @Test
