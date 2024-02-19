@@ -22,7 +22,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 public class WorldCoordinate extends Auditable {
 
-  public enum DimensionEnum {
+  public enum Dimension {
     OVERWORLD,
     NETHER,
     END
@@ -42,13 +42,13 @@ public class WorldCoordinate extends Auditable {
 
   @Enumerated(EnumType.STRING)
   @Column(columnDefinition = "varchar(255) default 'OVERWORLD'")
-  private DimensionEnum dimension;
+  private Dimension dimension;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "fk_world")
   private World world;
 
-  public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {
+  public WorldCoordinate(String name, int x, int y, int z, Dimension dimension, World world) {
     this.name = name;
     this.x = x;
     this.y = y;
