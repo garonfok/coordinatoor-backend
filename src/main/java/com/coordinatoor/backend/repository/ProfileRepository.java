@@ -30,4 +30,37 @@ public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
       ORDER BY p.username ASC
         """, nativeQuery = true)
   List<Profile> findByUsernameContains(String username);
+
+  @Query(value = """
+      SELECT p
+      FROM Profile p
+      JOIN WorldProfile wp
+      ON p.id = wp.profile_id
+      WHERE wp.world_id = :id
+      AND wp.role = 'OWNER'
+      LIMIT 1
+      """, nativeQuery = true)
+  Profile findByWorldOwner(Long id);
+
+  @Query(value = """
+      SELECT p
+      FROM Profile p
+      JOIN WorldProfile wp
+      ON p.id = wp.profile_id
+      WHERE wp.world_id = :id
+      AND wp.role = 'EDITOR'
+      ORDER BY p.username ASC
+      """, nativeQuery = true)
+  List<Profile> findByWorldEditor(Long id);
+
+  @Query(value = """
+      SELECT p
+      FROM Profile p
+      JOIN WorldProfile wp
+      ON p.id = wp.profile_id
+      WHERE wp.world_id = :id
+      AND wp.role = 'VIEWER'
+      ORDER BY p.username ASC
+      """, nativeQuery = true)
+  List<Profile> findByWorldViewer(Long id);
 }
