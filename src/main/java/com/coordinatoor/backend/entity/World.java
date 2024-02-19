@@ -3,7 +3,7 @@ package com.coordinatoor.backend.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.coordinatoor.backend.entity.WorldCoordinate.DimensionEnum;
+import com.coordinatoor.backend.entity.WorldCoordinate.Dimension;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -54,7 +54,7 @@ public class World extends Auditable {
         this.ipAddress);
   }
 
-  public Set<WorldCoordinate> getCoordinates(DimensionEnum dimension) {
+  public Set<WorldCoordinate> getCoordinates(Dimension dimension) {
     Set<WorldCoordinate> coordinates = new HashSet<>();
 
     for (WorldCoordinate coordinate : this.coordinates) {
@@ -76,7 +76,7 @@ public class World extends Auditable {
     coordinate.setWorld(null);
   }
 
-  public void addProfile(Profile profile, WorldProfile.RoleEnum role) {
+  public void addProfile(Profile profile, WorldProfile.Role role) {
     WorldProfile worldProfile = new WorldProfile(this, profile, role);
     this.profiles.add(worldProfile);
     profile.getWorlds().add(worldProfile);
@@ -93,7 +93,7 @@ public class World extends Auditable {
     }
   }
 
-  public void setRole(Profile profile, WorldProfile.RoleEnum role) {
+  public void setRole(Profile profile, WorldProfile.Role role) {
     for (WorldProfile worldProfile : this.profiles) {
       if (worldProfile.getProfile().equals(profile)) {
         worldProfile.setRole(role);

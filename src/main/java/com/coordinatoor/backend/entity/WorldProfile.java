@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Setter
 public class WorldProfile extends Auditable {
 
-  public enum RoleEnum {
+  public enum Role {
     OWNER, EDITOR, VIEWER
   }
 
@@ -37,9 +39,10 @@ public class WorldProfile extends Auditable {
   private Profile profile;
 
   @Column(nullable = false)
-  private RoleEnum role;
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
-  public WorldProfile(World world, Profile profile, RoleEnum role) {
+  public WorldProfile(World world, Profile profile, Role role) {
     this.world = world;
     this.profile = profile;
     this.id = new WorldProfileId(world.getId(), profile.getId());
