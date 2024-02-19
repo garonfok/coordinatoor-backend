@@ -18,6 +18,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = false)
 public class WorldCoordinate extends Auditable {
 
@@ -31,26 +32,20 @@ public class WorldCoordinate extends Auditable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter
   private String name;
 
-  @Setter
   private int x;
 
-  @Setter
   private int y;
 
-  @Setter
   private int z;
 
   @Enumerated(EnumType.STRING)
   @Column(columnDefinition = "varchar(255) default 'OVERWORLD'")
-  @Setter
   private DimensionEnum dimension;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "fk_world")
-  @Setter
   private World world;
 
   public WorldCoordinate(String name, int x, int y, int z, DimensionEnum dimension, World world) {

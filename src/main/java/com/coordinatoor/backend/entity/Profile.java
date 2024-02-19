@@ -18,6 +18,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = false, exclude = { "worlds" })
 public class Profile extends Auditable {
 
@@ -26,7 +27,6 @@ public class Profile extends Auditable {
   private Long id;
 
   @Column(unique = true)
-  @Setter
   private String username;
 
   @Column(unique = true)

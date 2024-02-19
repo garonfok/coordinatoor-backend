@@ -19,6 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, exclude = { "coordinates", "profiles" })
 public class World extends Auditable {
@@ -27,19 +28,15 @@ public class World extends Auditable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter
   private String name;
 
   @Column(nullable = true)
-  @Setter
   private String seed;
 
   @Column(nullable = true)
-  @Setter
   private String ipAddress;
 
   @OneToMany(mappedBy = "world", cascade = CascadeType.ALL, orphanRemoval = true)
-  @Setter
   private Set<WorldCoordinate> coordinates = new HashSet<>();
 
   @OneToMany(mappedBy = "world", cascade = CascadeType.ALL, orphanRemoval = true)
