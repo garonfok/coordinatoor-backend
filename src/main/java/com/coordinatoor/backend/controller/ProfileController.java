@@ -24,12 +24,14 @@ public class ProfileController {
 
   @GetMapping(path = "/{id}", produces = "application/json")
   public Profile getProfile(@PathVariable Long id) {
-    return profileRepository.findById(id).orElse(null);
+    return profileRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find profile with specified id"));
   }
 
   @GetMapping(path = "/email/{email}", produces = "application/json")
   public Profile getProfileByEmail(@PathVariable String email) {
-    return profileRepository.findByEmail(email).orElse(null);
+    return profileRepository.findByEmail(email)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find profile with specified email"));
   }
 
   @GetMapping(path = "/search/email/{email}", produces = "application/json")
@@ -49,15 +51,11 @@ public class ProfileController {
 
   @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
   public Profile updateProfile(@PathVariable Long id, @RequestBody Profile newProfile) {
-    return profileRepository.findById(id).map(
-        profile -> {
-          profile.setEmail(newProfile.getEmail());
-          profile.setUsername(newProfile.getUsername());
-          return profileRepository.save(profile);
-        }).orElseGet(() -> {
-          newProfile.setId(id);
-          return profileRepository.save(newProfile);
-        });
+    Profile profile = profileRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find profile with specified id"));
+    profile.setEmail(newProfile.getEmail());
+    profile.setUsername(newProfile.getUsername());
+    return profileRepository.save(profile);
   }
 
   @DeleteMapping(path = "/{id}")

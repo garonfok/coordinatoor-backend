@@ -29,13 +29,14 @@ public class WorldCoordinateController {
 
   @GetMapping(path = "/{id}", produces = "application/json")
   public WorldCoordinate getWorldCoordinate(@PathVariable("id") Long id) {
-    return worldCoordinateRepository.findById(id).orElse(null);
+    return worldCoordinateRepository.findById(id).orElseThrow(
+        () -> new IllegalArgumentException("Could not find world coordinate with specified id"));
   }
 
   @GetMapping(path = "/world/{id}", produces = "application/json")
   public List<WorldCoordinate> getWorldCoordinatesByWorld(@PathVariable("id") Long id) {
     World world = worldRepository.findById(id).orElseThrow(
-        () -> new IllegalArgumentException("World not found"));
+        () -> new IllegalArgumentException("Could not find world with specified id"));
     return worldCoordinateRepository.findByWorldOrderByName(world);
   }
 
@@ -47,18 +48,14 @@ public class WorldCoordinateController {
   @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
   public WorldCoordinate updateWorldCoordinate(@PathVariable("id") Long id,
       @RequestBody WorldCoordinate newWorldCoordinate) {
-    return worldCoordinateRepository.findById(id).map(
-        worldCoordinate -> {
-          worldCoordinate.setName(newWorldCoordinate.getName());
-          worldCoordinate.setX(newWorldCoordinate.getX());
-          worldCoordinate.setY(newWorldCoordinate.getY());
-          worldCoordinate.setZ(newWorldCoordinate.getZ());
-          worldCoordinate.setDimension(newWorldCoordinate.getDimension());
-          return worldCoordinateRepository.save(worldCoordinate);
-        }).orElseGet(() -> {
-          newWorldCoordinate.setId(id);
-          return worldCoordinateRepository.save(newWorldCoordinate);
-        });
+    WorldCoordinate worldCoordinate = worldCoordinateRepository.findById(id).orElseThrow(
+        () -> new IllegalArgumentException("Could not find world coordinate with specified id"));
+    worldCoordinate.setName(newWorldCoordinate.getName());
+    worldCoordinate.setX(newWorldCoordinate.getX());
+    worldCoordinate.setY(newWorldCoordinate.getY());
+    worldCoordinate.setZ(newWorldCoordinate.getZ());
+    worldCoordinate.setDimension(newWorldCoordinate.getDimension());
+    return worldCoordinateRepository.save(worldCoordinate);
   }
 
   @DeleteMapping(path = "/{id}")

@@ -30,7 +30,8 @@ public class WorldController {
 
   @GetMapping(path = "/{id}", produces = "application/json")
   public World getWorld(@PathVariable Long id) {
-    return worldRepository.findById(id).orElse(null);
+    return worldRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find world with specified id"));
   }
 
   @GetMapping(path = "/search/name/{name}", produces = "application/json")
@@ -52,16 +53,12 @@ public class WorldController {
 
   @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
   public World updateWorld(@PathVariable Long id, @RequestBody World newWorld) {
-    return worldRepository.findById(id).map(
-        world -> {
-          world.setName(newWorld.getName());
-          world.setSeed(newWorld.getSeed());
-          world.setIpAddress(newWorld.getIpAddress());
-          return worldRepository.save(world);
-        }).orElseGet(() -> {
-          newWorld.setId(id);
-          return worldRepository.save(newWorld);
-        });
+    World world = worldRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find world with specified id"));
+    world.setName(newWorld.getName());
+    world.setSeed(newWorld.getSeed());
+    world.setIpAddress(newWorld.getIpAddress());
+    return worldRepository.save(world);
   }
 
   @DeleteMapping(path = "/{id}")
