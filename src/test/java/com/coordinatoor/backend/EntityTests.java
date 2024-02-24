@@ -1,79 +1,130 @@
 package com.coordinatoor.backend;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.coordinatoor.backend.entity.Profile;
 import com.coordinatoor.backend.entity.World;
 import com.coordinatoor.backend.entity.WorldCoordinate;
-import com.coordinatoor.backend.entity.WorldProfile.Role;
-import com.coordinatoor.backend.repository.ProfileRepository;
-import com.coordinatoor.backend.repository.WorldCoordinateRepository;
-import com.coordinatoor.backend.repository.WorldRepository;
+import com.github.javafaker.Faker;
 
-@SpringBootTest
+import jakarta.transaction.Transactional;
+
+@DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public class EntityTests {
 
   @Autowired
-  private ProfileRepository profileRepository;
+  private TestEntityManager entityManager;
 
-  @Autowired
-  private WorldRepository worldRepository;
+  private Faker faker;
 
-  @Autowired
-  private WorldCoordinateRepository worldCoordinateRepository;
+  private Profile[] profiles;
+  private World[] worlds;
+  private WorldCoordinate[] worldCoordinates;
 
-  private Profile profile;
-  private World world;
-  private WorldCoordinate worldCoordinate;
+  private World world_WorldCoordinate;
+
+  private static final int NUM_PROFILES = 100;
+  private static final int NUM_WORLDS = 100;
+  private static final int NUM_COORDINATES = 100;
+
+  private static final int COORD_LOWER_BOUND = -29999999;
+  private static final int COORD_UPPER_BOUND = 29999999;
 
   @BeforeAll
-  public void create() {
-    profile = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
+  @Transactional
+  public void setup() {
+    faker = new Faker();
 
-    world = worldRepository.save(
-        new World("Test World", "12345", "12334123"));
+    profiles = new Profile[NUM_PROFILES];
+    worlds = new World[NUM_WORLDS];
+    worldCoordinates = new WorldCoordinate[NUM_COORDINATES];
 
-    worldCoordinate = worldCoordinateRepository.save(
-        new WorldCoordinate("Test Coordinate", 1, 2, 3,
-            WorldCoordinate.Dimension.OVERWORLD, world));
+    for (int i = 0; i < NUM_PROFILES; i++) {
+      String username = faker.name().username();
+      String uuid = Integer.toString(i);
+      Profile profile = new Profile(
+          username,
+          uuid);
+      profile.setCreatedDate(LocalDateTime.now());
+      profiles[i] = profile;
+    }
+
+    for (int i = 0; i < NUM_WORLDS; i++) {
+      String name = faker.name().title();
+      String seed = faker.leagueOfLegends().quote();
+      String ip = faker.internet().ipV4Address().toString();
+      World world = new World(
+          name,
+          seed,
+          ip);
+      world.setCreatedDate(LocalDateTime.now());
+      worlds[i] = world;
+    }
+
+    world_WorldCoordinate = new World(
+        faker.name().title(),
+        faker.leagueOfLegends().quote(),
+        faker.internet().ipV4Address().toString());
+    world_WorldCoordinate.setCreatedDate(LocalDateTime.now());
+
+    for (int i = 0; i < NUM_COORDINATES; i++) {
+      String name = faker.book().title();
+      int x = faker.number().numberBetween(COORD_LOWER_BOUND, COORD_UPPER_BOUND);
+      int y = faker.number().numberBetween(-64, 320);
+      int z = faker.number().numberBetween(COORD_LOWER_BOUND, COORD_UPPER_BOUND);
+      WorldCoordinate worldCoordinate = new WorldCoordinate(
+          name,
+          x,
+          y,
+          z,
+          WorldCoordinate.Dimension.OVERWORLD,
+          world_WorldCoordinate);
+      worldCoordinate.setCreatedDate(LocalDateTime.now());
+      worldCoordinates[i] = worldCoordinate;
+    }
+  }
+
+  @AfterEach
+  public void cleanUp() {
+    entityManager.clear();
+    System.out.println("CLEANED UP");
   }
 
   @Test
-  public void testExists() {
-    long profileId = profile.getId();
-    long worldId = world.getId();
-    long worldCoordinateId = worldCoordinate.getId();
-
-    assertTrue(profileRepository.existsById(profileId));
-    assertTrue(worldRepository.existsById(worldId));
-    assertTrue(worldCoordinateRepository.existsById(worldCoordinateId));
+  public void testProfile() {
+    for (Profile profile : profiles) {
+      Profile savedProfile = entityManager.persistFlushFind(profile);
+      assertEquals(profile, savedProfile);
+    }
   }
 
   @Test
-  public void testRoles() {
-    Profile profile1 = profileRepository.save(new Profile("janedoe", "janedoe@email.com"));
-    Profile profile2 = profileRepository.save(new Profile("jameswong", "jameswong@email.com"));
-    Profile profile3 = profileRepository.save(new Profile("jacksmith", "jacksmith@email.com"));
-    Profile profile4 = profileRepository.save(new Profile("marysue", "marysue@email.com"));
+  public void testWorld() {
+    for (World world : worlds) {
+      World savedWorld = entityManager.persistFlushFind(world);
+      assertEquals(world, savedWorld);
+    }
+  }
 
-    world.addProfile(profile1, Role.OWNER);
-    world.addProfile(profile2, Role.EDITOR);
-    world.addProfile(profile3, Role.VIEWER);
-    world.addProfile(profile4, Role.VIEWER);
-
-    assertEquals(4, world.getProfiles().size());
-    world.removeProfile(profile4);
-    assertEquals(3, world.getProfiles().size());
-    world.setRole(profile3, Role.EDITOR);
+  @Test
+  public void testWorldCoordinate() {
+    entityManager.persistAndFlush(world_WorldCoordinate);
+    for (WorldCoordinate worldCoordinate : worldCoordinates) {
+      WorldCoordinate savedWorldCoordinate = entityManager.persistFlushFind(worldCoordinate);
+      assertEquals(worldCoordinate, savedWorldCoordinate);
+    }
   }
 }
