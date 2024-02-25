@@ -101,6 +101,10 @@ public class RepositoryTests {
     assertNotNull(profile);
     assertEquals("janedoe", profile.getUsername());
 
+    profile = profileRepository.findByAuth0Sub("3").orElse(null);
+    assertNotNull(profile);
+    assertEquals("carlsagan", profile.getUsername());
+
     List<Profile> searchedEmails = profileRepository.findByEmailContainsIgnoreCaseOrderByUsername("@email.com");
     assertEquals(5, searchedEmails.size());
 

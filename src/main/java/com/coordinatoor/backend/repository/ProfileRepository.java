@@ -13,6 +13,8 @@ import com.coordinatoor.backend.entity.WorldProfile.Role;
 public interface ProfileRepository extends ListCrudRepository<Profile, Long> {
   Optional<Profile> findByEmail(String email);
 
+  Optional<Profile> findByAuth0Sub(String sub);
+
   List<Profile> findByEmailContainsIgnoreCaseOrderByUsername(String email);
 
   List<Profile> findByUsernameContainsIgnoreCaseOrderByUsername(String username);
