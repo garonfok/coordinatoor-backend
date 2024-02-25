@@ -27,6 +27,9 @@ public class Profile extends Auditable {
   private Long id;
 
   @Column(unique = true)
+  private String auth0Sub;
+
+  @Column()
   private String username;
 
   @Column(unique = true)
@@ -35,7 +38,8 @@ public class Profile extends Auditable {
   @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<WorldProfile> worlds = new HashSet<>();
 
-  public Profile(String username, String email) {
+  public Profile(String auth0Sub, String username, String email) {
+    this.auth0Sub = auth0Sub;
     this.username = username;
     this.email = email;
   }

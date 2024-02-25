@@ -50,6 +50,7 @@ public class AuditTests {
     faker = new Faker();
 
     profile = new Profile(
+        faker.internet().uuid(),
         faker.name().username(),
         faker.internet().uuid());
     world = new World(

@@ -27,82 +27,82 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 public class ControllerTests {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private ProfileRepository profileRepository;
+        @Autowired
+        private ProfileRepository profileRepository;
 
-    @BeforeAll
-    public void setup() {
-        profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
-    }
-
-    @Test
-    public void testProfile() throws Exception {
-        mockMvc.perform(get("/profile/1"))
-                .andExpect(status().isOk())
-                .andExpect(
-                        jsonPath("$.username").value("johnsmith"))
-                .andExpect(jsonPath("$.email").value("johnsmith@email.com"));
-        mockMvc.perform(get("/profile/email/johnsmith@email.com"))
-                .andExpect(status().isOk()).andExpect(
-                        jsonPath("$.username").value("johnsmith"))
-                .andExpect(jsonPath("$.email").value("johnsmith@email.com"));
-        ;
-
-        mockMvc.perform(get("/profile/search/email/johnsmith"))
-                .andExpect(status().isOk())
-                .andExpect(
-                        jsonPath("$[0].username").value("johnsmith"))
-                .andExpect(jsonPath("$[0].email").value("johnsmith@email.com"));
-
-        mockMvc.perform(get("/profile/search/username/john"))
-                .andExpect(status().isOk())
-                .andExpect(
-                        jsonPath("$[0].username").value("johnsmith"))
-                .andExpect(jsonPath("$[0].email").value("johnsmith@email.com"));
-
-        Profile postProfile = new Profile("johndoe", "johndoe@email.com");
-
-        mockMvc.perform(post("/profile/")
-                .contentType("application/json")
-                .content(asJsonString(postProfile)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("johndoe"))
-                .andExpect(jsonPath("$.email").value("johndoe@email.com"));
-
-        mockMvc.perform(get("/profile/2"))
-                .andExpect(status().isOk())
-                .andExpect(
-                        jsonPath("$.username").value("johndoe"))
-                .andExpect(jsonPath("$.email").value("johndoe@email.com"));
-
-        Profile putProfile = new Profile("janedoe", "janedoe@email.com");
-
-        String requestJson = asJsonString(putProfile);
-
-        mockMvc.perform(put("/profile/2")
-                .contentType("application/json")
-                .content(requestJson))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("janedoe"))
-                .andExpect(jsonPath("$.email").value("janedoe@email.com"));
-
-        mockMvc.perform(delete("/profile/2"))
-                .andExpect(status().isOk());
-
-        assertThrows(
-                Exception.class,
-                () -> mockMvc.perform(get("/profile/2"))
-                        .andExpect(status().isNotFound()));
-    }
-
-    private String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        @BeforeAll
+        public void setup() {
+                profileRepository.save(new Profile("1234567890","johnsmith", "johnsmith@email.com"));
         }
-    }
+
+        @Test
+        public void testProfile() throws Exception {
+                mockMvc.perform(get("/profile/1"))
+                                .andExpect(status().isOk())
+                                .andExpect(
+                                                jsonPath("$.username").value("johnsmith"))
+                                .andExpect(jsonPath("$.email").value("johnsmith@email.com"));
+                mockMvc.perform(get("/profile/email/johnsmith@email.com"))
+                                .andExpect(status().isOk()).andExpect(
+                                                jsonPath("$.username").value("johnsmith"))
+                                .andExpect(jsonPath("$.email").value("johnsmith@email.com"));
+                ;
+
+                mockMvc.perform(get("/profile/search/email/johnsmith"))
+                                .andExpect(status().isOk())
+                                .andExpect(
+                                                jsonPath("$[0].username").value("johnsmith"))
+                                .andExpect(jsonPath("$[0].email").value("johnsmith@email.com"));
+
+                mockMvc.perform(get("/profile/search/username/john"))
+                                .andExpect(status().isOk())
+                                .andExpect(
+                                                jsonPath("$[0].username").value("johnsmith"))
+                                .andExpect(jsonPath("$[0].email").value("johnsmith@email.com"));
+
+                Profile postProfile = new Profile("qwertyuiop","johndoe", "johndoe@email.com");
+
+                mockMvc.perform(post("/profile/")
+                                .contentType("application/json")
+                                .content(asJsonString(postProfile)))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.username").value("johndoe"))
+                                .andExpect(jsonPath("$.email").value("johndoe@email.com"));
+
+                mockMvc.perform(get("/profile/2"))
+                                .andExpect(status().isOk())
+                                .andExpect(
+                                                jsonPath("$.username").value("johndoe"))
+                                .andExpect(jsonPath("$.email").value("johndoe@email.com"));
+
+                Profile putProfile = new Profile("abcdefghijkl", "janedoe", "janedoe@email.com");
+
+                String requestJson = asJsonString(putProfile);
+
+                mockMvc.perform(put("/profile/2")
+                                .contentType("application/json")
+                                .content(requestJson))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.username").value("janedoe"))
+                                .andExpect(jsonPath("$.email").value("janedoe@email.com"));
+
+                mockMvc.perform(delete("/profile/2"))
+                                .andExpect(status().isOk());
+
+                assertThrows(
+                                Exception.class,
+                                () -> mockMvc.perform(get("/profile/2"))
+                                                .andExpect(status().isNotFound()));
+        }
+
+        private String asJsonString(final Object obj) {
+                try {
+                        return new ObjectMapper().writeValueAsString(obj);
+                } catch (Exception e) {
+                        throw new RuntimeException(e);
+                }
+        }
 }

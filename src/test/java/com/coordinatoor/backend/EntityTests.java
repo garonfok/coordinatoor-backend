@@ -53,9 +53,11 @@ public class EntityTests {
     worldCoordinates = new WorldCoordinate[NUM_COORDINATES];
 
     for (int i = 0; i < NUM_PROFILES; i++) {
+      String auth0Sub = faker.internet().uuid() + i;
       String username = faker.name().username();
       String uuid = Integer.toString(i);
       Profile profile = new Profile(
+          auth0Sub,
           username,
           uuid);
       profile.setCreatedDate(LocalDateTime.now());

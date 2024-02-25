@@ -46,11 +46,11 @@ public class RepositoryTests {
 
   @BeforeAll
   public void create() {
-    profile1 = profileRepository.save(new Profile("johnsmith", "johnsmith@email.com"));
-    profile2 = profileRepository.save(new Profile("janedoe", "janedoe@email.com"));
-    profile3 = profileRepository.save(new Profile("carlsagan", "carlsagan@email.com"));
-    profile4 = profileRepository.save(new Profile("susanwong", "susanwong@email.com"));
-    profile5 = profileRepository.save(new Profile("troybaker", "troybaker@email.com"));
+    profile1 = profileRepository.save(new Profile("1", "johnsmith", "johnsmith@email.com"));
+    profile2 = profileRepository.save(new Profile("2", "janedoe", "janedoe@email.com"));
+    profile3 = profileRepository.save(new Profile("3", "carlsagan", "carlsagan@email.com"));
+    profile4 = profileRepository.save(new Profile("4", "susanwong", "susanwong@email.com"));
+    profile5 = profileRepository.save(new Profile("5", "troybaker", "troybaker@email.com"));
 
     profileRepository.save(profile1);
     profileRepository.save(profile2);
@@ -108,7 +108,8 @@ public class RepositoryTests {
     assertEquals(1, searchedUsernames.size());
     assertEquals(profile2, searchedUsernames.get(0));
 
-    List<Profile> searchedWorlds = profileRepository.findByWorlds_WorldIdAndWorlds_RoleOrderByUsername(world.getId(), Role.EDITOR);
+    List<Profile> searchedWorlds = profileRepository.findByWorlds_WorldIdAndWorlds_RoleOrderByUsername(world.getId(),
+        Role.EDITOR);
     assertEquals(2, searchedWorlds.size());
 
     searchedWorlds = profileRepository.findByWorlds_WorldIdAndWorlds_RoleOrderByUsername(world.getId(), Role.VIEWER);
@@ -142,13 +143,15 @@ public class RepositoryTests {
     assertEquals(0, worldCoordinate.getZ());
     assertEquals(Dimension.OVERWORLD, worldCoordinate.getDimension());
 
-    List<WorldCoordinate> searchedCoordinates = worldCoordinateRepository.findByWorldAndNameContainsIgnoreCaseOrderByName(world, "Test");
+    List<WorldCoordinate> searchedCoordinates = worldCoordinateRepository
+        .findByWorldAndNameContainsIgnoreCaseOrderByName(world, "Test");
     assertEquals(3, searchedCoordinates.size());
 
     searchedCoordinates = worldCoordinateRepository.findByWorldAndDimensionOrderByName(world, Dimension.OVERWORLD);
     assertEquals(1, searchedCoordinates.size());
 
-    searchedCoordinates = worldCoordinateRepository.findByWorldAndDimensionAndNameContainsIgnoreCaseOrderByName(world, Dimension.OVERWORLD, "Test");
+    searchedCoordinates = worldCoordinateRepository.findByWorldAndDimensionAndNameContainsIgnoreCaseOrderByName(world,
+        Dimension.OVERWORLD, "Test");
     assertEquals(1, searchedCoordinates.size());
 
     searchedCoordinates = worldCoordinateRepository.findByWorldOrderByName(world);
