@@ -34,6 +34,12 @@ public class ProfileController {
         .orElseThrow(() -> new IllegalArgumentException("Could not find profile with specified email"));
   }
 
+  @GetMapping(path = "/sub/{sub}", produces = "application/json")
+  public Profile getProfileBySub(@PathVariable String sub) {
+    return profileRepository.findByAuth0Sub(sub)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find profile with specified sub"));
+  }
+
   @GetMapping(path = "/search/email/{email}", produces = "application/json")
   public List<Profile> getProfilesByEmail(@PathVariable String email) {
     return profileRepository.findByEmailContainsIgnoreCaseOrderByUsername(email);
