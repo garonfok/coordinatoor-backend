@@ -53,10 +53,7 @@ public class AuditTests {
         faker.internet().uuid(),
         faker.name().username(),
         faker.internet().uuid());
-    world = new World(
-        faker.name().title(),
-        faker.leagueOfLegends().quote(),
-        faker.internet().ipV4Address().toString());
+    world = new World(faker.name().title());
     worldCoordinate = new WorldCoordinate(
         faker.book().title(),
         faker.number().numberBetween(COORD_LOWER_BOUND, COORD_UPPER_BOUND),

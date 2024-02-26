@@ -42,10 +42,8 @@ public class World extends Auditable {
   @OneToMany(mappedBy = "world", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<WorldProfile> profiles = new HashSet<>();
 
-  public World(String name, String seed, String ipAddress) {
+  public World(String name) {
     this.name = name;
-    this.seed = seed;
-    this.ipAddress = ipAddress;
   }
 
   @Override

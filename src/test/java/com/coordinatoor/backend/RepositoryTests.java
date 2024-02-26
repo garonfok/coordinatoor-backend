@@ -58,7 +58,9 @@ public class RepositoryTests {
     profileRepository.save(profile4);
     profileRepository.save(profile5);
 
-    world = new World("Test World", "12345", "12334123");
+    world = new World("Test World");
+    world.setSeed("12345");
+    world.setIpAddress("jahskdhaskjdhaks");
     worldRepository.save(world);
 
     world.addProfile(profile1, Role.OWNER);

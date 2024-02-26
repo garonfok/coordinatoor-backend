@@ -68,18 +68,16 @@ public class EntityTests {
       String name = faker.name().title();
       String seed = faker.leagueOfLegends().quote();
       String ip = faker.internet().ipV4Address().toString();
-      World world = new World(
-          name,
-          seed,
-          ip);
+      World world = new World(name);
+      world.setSeed(seed);
+      world.setIpAddress(ip);
       world.setCreatedDate(LocalDateTime.now());
       worlds[i] = world;
     }
 
-    world_WorldCoordinate = new World(
-        faker.name().title(),
-        faker.leagueOfLegends().quote(),
-        faker.internet().ipV4Address().toString());
+    world_WorldCoordinate = new World(faker.name().title());
+    world_WorldCoordinate.setSeed(faker.leagueOfLegends().quote());
+    world_WorldCoordinate.setIpAddress(faker.internet().ipV4Address().toString());
     world_WorldCoordinate.setCreatedDate(LocalDateTime.now());
 
     for (int i = 0; i < NUM_COORDINATES; i++) {
