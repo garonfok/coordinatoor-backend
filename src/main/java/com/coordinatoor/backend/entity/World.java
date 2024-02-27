@@ -2,6 +2,7 @@ package com.coordinatoor.backend.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.coordinatoor.backend.entity.WorldCoordinate.Dimension;
 
@@ -27,6 +28,9 @@ public class World extends Auditable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID uuid;
 
   private String name;
 
